@@ -1,6 +1,6 @@
 /* This is where we put our global variables */
 var errors = [];
 var errorDist = [0];
-var questions = 0;
-var min = 3;
-var max = 9;
+var questions = parseInt(document.getElementById("questions").value);
+var min = parseInt(document.getElementById("min").value);
+var max = parseInt(document.getElementById("max").value);
