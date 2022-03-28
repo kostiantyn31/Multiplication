@@ -9,7 +9,7 @@ var y = Math.floor(Math.random() * (max - min + 1)) + min;
 
 function startLoop() {
     // alert(questions+"-"+max+"-"+min);
-    // forLoop();
+    // stats();
     uiLoop();
 }
 
@@ -30,12 +30,12 @@ function uiLoop() {
     interface.appendChild(equation);
     // Answer Box
     const userAnswer = document.createElement("input");
-    userAnswer.setAttribute('id','userAnswer');
+    userAnswer.setAttribute('id','useranswer');
     //userAnswer.innerText = "Submit Answer";
     interface.appendChild(userAnswer);
     // Displaying the button
     const buttonBox = document.createElement("div");
-    buttonBox.setAttribute('id', 'buttonBox')
+    buttonBox.setAttribute('id', 'buttonbox')
     let button = document.createElement("button");
     button.innerText = "Submit Answer";
     button.setAttribute("onclick", "getAnswer()");
@@ -43,16 +43,18 @@ function uiLoop() {
     interface.appendChild(buttonBox);
 }
 
-function getAnswer() {
-    const userAnswer = document.getElementById("userAnswer");
-    if (userAnswer.value != x * y) {
+function getAnswer() { //this function checks the answer and evaluates the value of the input of useranswer
+    let answer = document.getElementById("useranswer").value;
+    if (answer != x * y) {
         alert("Incorrect, " + x + " X " + y + " = " + (x * y));
         errors.push((x, y));
+        question++;
     }
     else {
-        alert("correct");
+        alert("Correct");
+        question++;
     }
-    question++;
+    // question++;
     if (question <= questions) {
         uiLoop();
     }
@@ -61,27 +63,27 @@ function getAnswer() {
     }
 }
 
-function forLoop() {
-    for (let question = 1; question <= questions; question++) {
-        let error = askQuestion();
-        if (error[0] > 0) {
-            error.splice(0, 1);
-            errors.push(error);
-            alert(errors.join("\n"));
-        }
-    }
-}
+// function stats() {
+//     for (let question = 1; question <= questions; question++) {
+//         let error = statsLoop();
+//         if (error[0] > 0) {
+//             error.splice(0, 1);
+//             errors.push(error);
+//             alert(errors.join("\n"));
+//         }
+//     }
+// }
 
-function askQuestion() {
+function questErrors() {
     let error = [0, 0, 0];
-    let product = x * y;
-    // let answer = prompt(x + " X " + y +" = ?");
-    let answer = x + " X " + y + " = ?";
-    if (answer == product) alert("Correct!");
-    else {
-        alert("Incorrect! " + x + " X " + y + " = " + product);
+    // let product = x * y;
+    // let answer = x + " X " + y + " = ?";
+    // if (answer == product) {
+    //     alert("Correct!");
+    // }
+    // else {
+    //     alert("Incorrect! " + x + " X " + y + " = " + product);
         error = [1, x, y];
-    }
+    // }
     return error;
 }
-
