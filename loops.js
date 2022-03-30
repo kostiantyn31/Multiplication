@@ -4,86 +4,87 @@ var max = parseInt(localStorage.getItem("max"));
 var min = parseInt(localStorage.getItem("min"));
 var errors = [];
 var questionNum = 1;
-var x = Math.floor(Math.random() * (max - min + 1)) + min;
-var y = Math.floor(Math.random() * (max - min + 1)) + min;
+var x = 0;
+var y = 0;
+var product = 0;
 
-function startLoop() {
-    // alert(questions+"-"+max+"-"+min);
-    // stats();
-    uiLoop();
-}
-
-function uiLoop() {
-    let question = 1;
+function display() {
     // Find our Div
     let interface = document.getElementById("interface");
     // Remove the Button
-    var oldButton = document.getElementById("beginQuiz");
+    let oldButton = document.getElementById("beginQuiz");
     oldButton.remove();
+
     // Create the Question Box
     const questionBox = document.createElement("div");
-    questionBox.innerText = "Question " + question + " of " + questions;
+    questionBox.setAttribute("id","questionBox");
     interface.appendChild(questionBox);
-    // Ask the Question
-    const equation = document.createElement("div");
-    equation.innerText = x + " X " + y + " = ?";
-    interface.appendChild(equation);
+
+    // Display Question
+    const questionDisplay = document.createElement("div");
+    questionDisplay.setAttribute("id","questDisplay");
+    interface.appendChild(questionDisplay);
+
     // Answer Box
     const userAnswer = document.createElement("input");
-    userAnswer.setAttribute('id','useranswer');
-    //userAnswer.innerText = "Submit Answer";
+    userAnswer.setAttribute('id','userAnswer');
     interface.appendChild(userAnswer);
+
     // Displaying the button
-    const buttonBox = document.createElement("div");
-    buttonBox.setAttribute('id', 'buttonbox')
-    let button = document.createElement("button");
-    button.innerText = "Submit Answer";
-    button.setAttribute("onclick", "getAnswer()");
-    buttonBox.appendChild(button);
-    interface.appendChild(buttonBox);
+    let subButton = document.createElement("button");
+    subButton.setAttribute("id", "subButton");
+    subButton.setAttribute("onclick", "checkAnswer()");
+    subButton.innerText = "Submit Answer";
+    interface.appendChild(subButton);
+    display();
+
+    // Response
+    let responseBox = document.createElement("div");
+    responseBox.setAttribute("id","response");
+    interface.appendChild(responseBox);
 }
 
-function getAnswer() { //this function checks the answer and evaluates the value of the input of useranswer
-    let answer = document.getElementById("useranswer").value;
-    if (answer != x * y) {
-        alert("Incorrect, " + x + " X " + y + " = " + (x * y));
-        errors.push((x, y));
-        question++;
-    }
-    else {
-        alert("Correct");
-        question++;
-    }
-    // question++;
-    if (question <= questions) {
-        uiLoop();
-    }
-    else {
-        interface.innerHTML = "";
-    }
+function askQuestion(){
+    let questionBox = document.getElementById("questionBox"); 
+    let questDisplay = document.getElementById("questDisplay");
+    questionBox.innerText = "Question "+questionNum+" of "+questions;
+    x = Math.floor(Math.random() * (max - min + 1)) + min;
+    y = Math.floor(Math.random() * (max - min + 1)) + min;
+    let questionText = x + " X " + y +" = ?";
+    questDisplay.innerHTML= questionText;
 }
 
-// function stats() {
-//     for (let question = 1; question <= questions; question++) {
-//         let error = statsLoop();
-//         if (error[0] > 0) {
-//             error.splice(0, 1);
-//             errors.push(error);
-//             alert(errors.join("\n"));
-//         }
-//     }
-// }
+function checkAnswer(){
+    let userAnswer = document.getElementById("userAnswer");
+    let answer = parseInt(userAnswer.value);
+    let questionBox = document.getElementById("questionBox");
+    let correct = null;
+    let wrong = null;
+    let responseBox = document.getElementById("responseBox");
+    let response = "";
+    let error = null;
+    product = (x * y);
+    if(answer == product){
+        questionNum++;
+        correct = "Correct, "+x+" X "+y+" equals "+product;
+        response = correct;
+        responseBox.innerHTML = response;
+    }
+    else{
+        error = [x,y];
+        error.splice(0,1);
+        errors.push(error);
+        alert(errors);
+        questionNum++;
+        wrong = "Incorrect!, "+x+" X "+y+" equals "+product;
+        response = wrong;
+        responseBox.innerHTML = response;
+        }
 
-function questErrors() {
-    let error = [0, 0, 0];
-    // let product = x * y;
-    // let answer = x + " X " + y + " = ?";
-    // if (answer == product) {
-    //     alert("Correct!");
-    // }
-    // else {
-    //     alert("Incorrect! " + x + " X " + y + " = " + product);
-        error = [1, x, y];
-    // }
-    return error;
+    if (questionNum <= questions){
+        askQuestion();
+    }
+    else{
+        document.location = 'stats.html';
+    }
 }
