@@ -33,10 +33,10 @@ function display() {
     // Displaying the button
     let subButton = document.createElement("button");
     subButton.setAttribute("id", "subButton");
-    subButton.setAttribute("onclick", "checkAnswer()");
+    subButton.setAttribute("onClick", "checkAnswer()");
     subButton.innerText = "Submit Answer";
     interface.appendChild(subButton);
-    display();
+    askQuestion();
 
     // Response
     let responseBox = document.createElement("div");
@@ -85,6 +85,74 @@ function checkAnswer(){
         askQuestion();
     }
     else{
-        document.location = 'stats.html';
+        interface.setAttribute("class",null);
+        interface.innerHTML = " ";
+        localStorage.setItem('errors',errors);
+        stats();
     }
+}
+
+function stats() {
+    let highFactor = [0, 0];
+    // sample errors array data
+    let errorDist = []
+    // fill errorDist with zeros
+    for (let i = 0; i <= max; i++) {
+        errorDist[i] = 0;
+    }
+    // add error factors to dist
+    for (i = 0; i < errors.length; i++) {
+        errorDist[errors[i][0]]++;
+        errorDist[errors[i][1]]++;
+    }
+    // find greatest number
+    for (let i = max; i > 0; i--) {
+        if (errorDist[i] > highFactor[1]) {
+            highFactor = [i, errorDist[i]];
+        }
+    }
+  //The string that displays the string of the tables (7*[1...max] = product);
+    let errorString = ""; //Errors String to display the times table
+    for (let i = 0; i < errors.length; i++) {
+        errorString += errors[i][0] + " * " + errors[i][1] + " = " + (errors[i][0] * errors[i][1]) + " (" + errors[i][2] + ")\n";
+    }
+
+    //The wrong question string
+    let wrongQuestion = document.createElement("p");
+    wrongQuestion.innerText = "You got "+errors.length+" of "+max+" wrong.";
+    document.body.appendChild(wrongQuestion);
+    if (highFactor[0] > 0) {
+        localStorage.setItem("problemFactor", highFactor[0]);
+    //The biggest problem string
+        let biggestIssue = document.createElement("p");
+        biggestIssue.setAttribute("margin-top", "25px");
+        biggestIssue.innerText = "Your biggest problem factor was " + highFactor[0] + ".";
+        interface.appendChild(biggestIssue);
+    } 
+    else{
+      localStorage.setItem("problemFactor", null);
+    } 
+
+  //The retry button asking the user to retry the quiz.
+    let retry = document.createElement("button");
+    retry.innerText = "Try again";
+    retry.id = "tryAgain";
+    retry.setAttribute("onclick", "retry()");
+    interface.appendChild(retry);
+
+  //The tables button directing the player to go to the times tables
+    let tables = document.createElement("button");
+    tables.setAttribute("id","tablesButton");
+    tables.innerText = "View multiplication tables";
+    tables.setAttribute("onclick", "toTables()");
+    interface.appendChild(tables);
+}
+  //Going to Tables.HTML
+
+function toTables() {
+    document.location = "tables.html";
+}
+
+function retry(){
+    document.location = 'setup.html';
 }
