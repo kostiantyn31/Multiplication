@@ -55,13 +55,14 @@ function askQuestion(){
 }
 
 function checkAnswer(){
+    alert("hi");
     let userAnswer = document.getElementById("userAnswer");
     let answer = parseInt(userAnswer.value);
     let questionBox = document.getElementById("questionBox");
     let correct = null;
     let wrong = null;
-    let responseBox = document.getElementById("responseBox");
-    let response = "";
+    let responseBox = document.getElementById("response");
+    let response = "working";
     let error = null;
     product = (x * y);
     if(answer == product){
