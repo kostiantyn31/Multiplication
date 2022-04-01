@@ -55,19 +55,18 @@ function askQuestion(){
 }
 
 function checkAnswer(){
-    alert("hi");
     let userAnswer = document.getElementById("userAnswer");
     let answer = parseInt(userAnswer.value);
     let questionBox = document.getElementById("questionBox");
     let correct = null;
     let wrong = null;
     let responseBox = document.getElementById("response");
-    let response = "working";
+    let response = " ";
     let error = null;
     product = (x * y);
     if(answer == product){
         questionNum++;
-        correct = "Correct, "+x+" X "+y+" equals "+product;
+        correct = "Correct, "+x+" X "+y+" equals "+product+ ". Here's a piece of candy for you!";
         response = correct;
         responseBox.innerHTML = response;
     }
@@ -77,7 +76,7 @@ function checkAnswer(){
         errors.push(error);
         alert(errors);
         questionNum++;
-        wrong = "Incorrect!, "+x+" X "+y+" equals "+product;
+        wrong = "Incorrect!, "+x+" X "+y+" equals "+product+ ". No candy for you!";
         response = wrong;
         responseBox.innerHTML = response;
         }

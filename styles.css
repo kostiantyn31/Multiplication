@@ -21,5 +21,16 @@ input{
     display:block;
 }
 #interface #subButton {
-    border:none;
+    padding:5px;
+    font-weight:bold;
+    font-size:10pt;
+}
+
+#subButton:hover {
+    background-color:black;
+    color:orange;
+}
+
+#interface {
+    text-align:center;
 }
