@@ -119,7 +119,7 @@ function stats() {
 
     //The wrong question string
     let wrongQuestion = document.createElement("p");
-    wrongQuestion.innerText = "You got "+errors.length+" of "+max+" wrong.";
+    wrongQuestion.innerText = "You missed out on "+errors.length+" of "+max+" pieces of candy.";
     document.body.appendChild(wrongQuestion);
     if (highFactor[0] > 0) {
         localStorage.setItem("problemFactor", highFactor[0]);
@@ -135,7 +135,7 @@ function stats() {
 
   //The retry button asking the user to retry the quiz.
     let retry = document.createElement("button");
-    retry.innerText = "Try again";
+    retry.innerText = "Trick or Treat Again?";
     retry.id = "tryAgain";
     retry.setAttribute("onclick", "retry()");
     interface.appendChild(retry);

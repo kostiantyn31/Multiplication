@@ -34,3 +34,16 @@ input{
 #interface {
     text-align:center;
 }
+
+h1 {
+    text-align: center;
+}
+
+p {
+    text-align: center;
+}
+
+button {
+    display: block;
+    margin: auto;
+}
