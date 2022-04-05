@@ -33,6 +33,11 @@ input{
 
 #interface {
     text-align:center;
+    height: 500px;
+    width: 400px;
+    background-image: url("https://ih1.redbubble.net/image.2837177315.9076/flat,750x,075,f-pad,750x1000,f8f8f8.jpg");
+    margin: auto;
+
 }
 
 h1 {
@@ -46,4 +51,6 @@ p {
 button {
     display: block;
     margin: auto;
+    border-radius: 25px;
 }
+
