@@ -1,6 +1,6 @@
 /* Function to run whichever loop we picked */
 var questions = parseInt(localStorage.getItem("questions"));
-var max = parseInt(localStorage.getItem("max"));
+var  max = parseInt(localStorage.getItem("max"));
 var min = parseInt(localStorage.getItem("min"));
 var errors = [];
 var questionNum = 1;
