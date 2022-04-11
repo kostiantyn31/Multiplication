@@ -93,6 +93,7 @@ function checkAnswer(){
 }
 
 function stats() {
+    // errors = [[3,5],[3,6],[3,9],[5,6]];
     let highFactor = [0, 0];
     // sample errors array data
     let errorDist = []

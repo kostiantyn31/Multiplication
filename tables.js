@@ -1,5 +1,9 @@
 /* This is where we print out the times tables */
 
+var inter = document.createElement("inter");
+inner.setAttribute("id","inter");
+document.body.appendChild(inter);
+
 function tables(factor){
     if(factor === "undefined"){
         factor = prompt("Times tables for ");
