@@ -63,4 +63,13 @@ button {
 #candyTable {
     margin: auto;
     border: 2px groove gray;
+    background-color: white;
+    font-size: 18pt;
+    text-align: center;
+    line-height: 1.5em;
+}
+
+#candyTable span {
+    color: maroon;
+    font-size: 24pt;
 }
