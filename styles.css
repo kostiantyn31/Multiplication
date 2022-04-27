@@ -60,7 +60,7 @@ button {
     font-size:10pt;
 }
 
-#inter {
-    width: 400px;
-    height: 400px;
+#candyTable {
+    margin: auto;
+    border: 2px groove gray;
 }

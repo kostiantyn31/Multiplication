@@ -1,15 +1,13 @@
 /* This is where we print out the times tables */
 
-var buttonTab = document.createElement("button");
-buttonTab.setAttribute("button","buttonTab");
-buttonTab.setAttribute("onClick","tables()");
-buttonTab.innertText="Tables";
-document.body.appendChild(buttonTab);
-
 function tables(){
     let min = localStorage.getItem("min");
     let max = localStorage.getItem("max");
     let factor = localStorage.getItem("problemFactor");
+    var tbl = document.getElementById("candyTable");
+    var row = tbl.insertRow();
+    var cell1 = row.insertCell();
+    cell1.innerHTML = "hey";
     if (factor === "undefined") {
         alert("hey");
         factor = prompt("Times tables for ");
