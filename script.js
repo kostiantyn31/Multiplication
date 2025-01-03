@@ -1,9 +1,13 @@
 /* This is where we put our global variables */
 var errors = [];
 var errorDist = [0];
-var questions = parseInt(document.getElementById("questions").value);
-var min = parseInt(document.getElementById("min").value);
-var max = parseInt(document.getElementById("max").value);
+// var questions = parseInt(document.getElementById("questions").value);
+// var min = parseInt(document.getElementById("min").value);
+// var max = parseInt(document.getElementById("max").value);
+var questions = 2;
+var min = 3;
+var max = 9;
+
 
 function setup() {
     let body = document.getElementsByTagName("body")[0];
@@ -39,23 +43,13 @@ function configure() {
     body.appendChild(newbutton);
 }
 
-function askQuestion() { 
-    // let x = Math.floor(Math.random()*11);
-    // let y = Math.floor(Math.random()*11);
-    // let question = x*y;
+function askQuestion(questionNum, questions) { 
+    let questionText =  "Question "+ questionNum + " of " + questions + "<br>";
+    let x = Math.floor(Math.random() * (max - min + 1)) + min;
+    let y = Math.floor(Math.random() * (max - min + 1)) + min;
+    questionText += x + " * " + y + " = ?";
 
-    // let console = document.createElement("div");
-    // console.id = "console";
-    // console.innerHTML = "How much will " + x + " be multiplied by " + y + "???";
-    // body.appendChild(console);
-
-    let questionBox = document.getElementById("questionBox"); 
-    let questDisplay = document.getElementById("questDisplay");
-    questionBox.innerText = "Question "+ questionNum + " of " + questions;
-    // x = Math.floor(Math.random() * (max - min + 1)) + min;
-    // y = Math.floor(Math.random() * (max - min + 1)) + min;
-    let questionText = x + " X " + y + " = ?";
-    questDisplay.innerHTML= questionText;
+    return questionText;
 }
 
 function display() {
@@ -65,32 +59,35 @@ function display() {
     let oldbutton = document.getElementsByTagName("button")[0];
     oldbutton.remove();
     
+    // Displaying the button
+    let newButton = document.createElement("button");
+    newButton.id = "newButton";
+    newButton.addEventListener("click", checkAnswer);
+    newButton.innerText = "Submit Answer";
+    console.appendChild(newButton);
 
     // Create the Question Box
     const questionBox = document.createElement("div");
     questionBox.setAttribute("id","questionBox");
+    questionBox.innerHTML = askQuestion(1,1);
     console.appendChild(questionBox);
-
-    // Display Question
-    const questionDisplay = document.createElement("div");
-    questionDisplay.setAttribute("id","questDisplay");
-    console.appendChild(questionDisplay);
-
+    
     // Answer Box
-    const userAnswer = document.createElement("input");
-    userAnswer.setAttribute('id','userAnswer');
-    console.appendChild(userAnswer);
-
-    // Displaying the button
-    let subButton = document.createElement("button");
-    subButton.setAttribute("id", "subButton");
-    subButton.setAttribute("onClick", "checkAnswer()");
-    subButton.innerText = "Submit Answer";
-    console.appendChild(subButton);
-    askQuestion();
+    const answer = document.createElement("input");
+    answer.id = "answer";
+    console.appendChild(answer);   
 
     // Response
-    let responseBox = document.createElement("div");
-    responseBox.setAttribute("id","response");
-    console.appendChild(responseBox);
+    // let responseBox = document.createElement("div");
+    // responseBox.setAttribute("id","response");
+    // console.appendChild(responseBox);
+}
+
+function checkAnswer() {
+    answer = document.getElementById("answer").value;
+
+    if (answer == ans) {
+        alert("cor")
+    }
+        
 }
