@@ -7,6 +7,9 @@ var errorDist = [0];
 var questions = 2;
 var min = 3;
 var max = 9;
+var x = Math.floor(Math.random() * (max - min + 1)) + min;
+var y = Math.floor(Math.random() * (max - min + 1)) + min;
+var ans = x*y;
 
 
 function setup() {
@@ -17,7 +20,7 @@ function setup() {
 
     let console = document.createElement("div");
     console.id = "console";
-    console.innerHTML = "instructions";
+    console.innerHTML = "instructions" + "<br>";
     body.appendChild(console);
 
     let button = document.createElement("button");
@@ -45,8 +48,8 @@ function configure() {
 
 function askQuestion(questionNum, questions) { 
     let questionText =  "Question "+ questionNum + " of " + questions + "<br>";
-    let x = Math.floor(Math.random() * (max - min + 1)) + min;
-    let y = Math.floor(Math.random() * (max - min + 1)) + min;
+    // let x = Math.floor(Math.random() * (max - min + 1)) + min;
+    // let y = Math.floor(Math.random() * (max - min + 1)) + min;
     questionText += x + " * " + y + " = ?";
 
     return questionText;
@@ -78,16 +81,21 @@ function display() {
     console.appendChild(answer);   
 
     // Response
-    // let responseBox = document.createElement("div");
-    // responseBox.setAttribute("id","response");
-    // console.appendChild(responseBox);
+    let responseBox = document.createElement("div");
+    responseBox.setAttribute("id","response");
+    responseBox.innerHTML = checkAnswer(1,1);
+    console.appendChild(responseBox);
 }
 
 function checkAnswer() {
     answer = document.getElementById("answer").value;
+    responseBox = document.getElementById("responseBox");
 
     if (answer == ans) {
-        alert("cor")
+
     }
-        
+    else {
+
+    }
+
 }
