@@ -10,6 +10,7 @@ var max = 9;
 var x = Math.floor(Math.random() * (max - min + 1)) + min;
 var y = Math.floor(Math.random() * (max - min + 1)) + min;
 var ans = x*y;
+var questionNum = 1;
 
 
 function setup() {
@@ -20,7 +21,6 @@ function setup() {
 
     let console = document.createElement("div");
     console.id = "console";
-    console.innerHTML = "instructions" + "<br>";
     body.appendChild(console);
 
     let button = document.createElement("button");
@@ -30,10 +30,10 @@ function setup() {
 }
 
 function configure() {
-    questions = 5;
     min = 3;
     max = 12;
     console.innerHTML = "Program ready";
+
 
     let body = document.getElementsByTagName("body")[0];
 
@@ -46,28 +46,23 @@ function configure() {
     body.appendChild(newbutton);
 }
 
-function askQuestion(questionNum, questions) { 
-    let questionText =  "Question "+ questionNum + " of " + questions + "<br>";
-    // let x = Math.floor(Math.random() * (max - min + 1)) + min;
-    // let y = Math.floor(Math.random() * (max - min + 1)) + min;
-    questionText += x + " * " + y + " = ?";
+// function askQuestion(questionNum, questions) { 
+//     getRounds();
+//     let questionText =  "Question "+ questionNum + " of " + questions + "<br>";
+//     // let x = Math.floor(Math.random() * (max - min + 1)) + min;
+//     // let y = Math.floor(Math.random() * (max - min + 1)) + min;
+//     questionText += x + " * " + y + " = ?";
 
-    return questionText;
-}
+
+//     return questionText;
+// }
 
 function display() {
     // Find our Div
     let console = document.getElementById("console");
     // Remove the Button
     let oldbutton = document.getElementsByTagName("button")[0];
-    oldbutton.remove();
-    
-    // Displaying the button
-    let newButton = document.createElement("button");
-    newButton.id = "newButton";
-    newButton.addEventListener("click", checkAnswer);
-    newButton.innerText = "Submit Answer";
-    console.appendChild(newButton);
+    if(oldbutton) {oldbutton.remove();}
 
     // Create the Question Box
     const questionBox = document.createElement("div");
@@ -80,22 +75,60 @@ function display() {
     answer.id = "answer";
     console.appendChild(answer);   
 
-    // Response
-    let responseBox = document.createElement("div");
-    responseBox.setAttribute("id","response");
-    responseBox.innerHTML = checkAnswer(1,1);
-    console.appendChild(responseBox);
+    // Displaying the button
+    let newButton = document.createElement("button");
+    newButton.id = "newButton";
+    newButton.addEventListener("click", checkAnswer);
+    newButton.innerText = "Submit Answer";
+    console.appendChild(newButton);
+
+    let nextRound = document.createElement("button");
+    nextRound.id = "nextRound";
+    nextRound.addEventListener("click", askQuestion);
+    nextRound.innerText = "nextRound";
+    console.appendChild(nextRound);
+
+    return checkAnswer();
+
 }
 
 function checkAnswer() {
+    let console = document.getElementById("console");
+
+    let responseBox = document.createElement("div");
+    responseBox.setAttribute("id","response");
+    console.appendChild(responseBox);
     answer = document.getElementById("answer").value;
-    responseBox = document.getElementById("responseBox");
-
+    let feedback = "";
     if (answer == ans) {
-
+        feedback = "correct";
     }
     else {
-
+        feedback = "wrong";
     }
+    responseBox.innerHTML = feedback;
+    questionNum++;
+    askQuestion(questionNum);
+}
 
+function getRounds(){
+    let rounds = document.getElementById("rounds").value;
+    askQuestion(rounds);
+}
+
+
+function askQuestion(questionNum){
+    if (questionNum > 1) {
+        document.getElementById("console").innerHTML="";
+        display();
+    }
+    if (document.getElementById("response")) {
+        response.remove();
+        console.log("removed")
+    }
+    let questionText =  "Question "+ questionNum + " of " + questions + "<br>";
+    questionText += x + " * " + y + " = ?";
+    let score = [0, 0];
+    score++;
+    return questionText;
 }
