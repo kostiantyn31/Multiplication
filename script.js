@@ -11,7 +11,8 @@ var x = Math.floor(Math.random() * (max - min + 1)) + min;
 var y = Math.floor(Math.random() * (max - min + 1)) + min;
 var ans = x*y;
 var questionNum = 1;
-
+var errors = [];
+var factors= [0,0];
 
 function setup() {
     let body = document.getElementsByTagName("body")[0];
@@ -33,8 +34,6 @@ function configure() {
     min = 3;
     max = 12;
     console.innerHTML = "Program ready";
-
-
     let body = document.getElementsByTagName("body")[0];
 
     let oldbutton = document.getElementsByTagName("button")[0];
@@ -67,68 +66,69 @@ function display() {
     // Create the Question Box
     const questionBox = document.createElement("div");
     questionBox.setAttribute("id","questionBox");
-    questionBox.innerHTML = askQuestion(1,1);
     console.appendChild(questionBox);
-    
-    // Answer Box
+    newQuestion();
+}
+
+function newQuestion(){
     const answer = document.createElement("input");
     answer.id = "answer";
-    console.appendChild(answer);   
+    document.getElementById("console").appendChild(answer);   
+    document.getElementById("questionBox").innerHTML=askQuestion();
 
-    // Displaying the button
+    // Display the button
     let newButton = document.createElement("button");
     newButton.id = "newButton";
     newButton.addEventListener("click", checkAnswer);
     newButton.innerText = "Submit Answer";
-    console.appendChild(newButton);
-
-    let nextRound = document.createElement("button");
-    nextRound.id = "nextRound";
-    nextRound.addEventListener("click", askQuestion);
-    nextRound.innerText = "nextRound";
-    console.appendChild(nextRound);
-
-    return checkAnswer();
+    document.getElementById("console").appendChild(newButton);
 
 }
 
 function checkAnswer() {
     let console = document.getElementById("console");
-
     let responseBox = document.createElement("div");
     responseBox.setAttribute("id","response");
     console.appendChild(responseBox);
-    answer = document.getElementById("answer").value;
+    let answer = document.getElementById("answer").value;
+    let product = x * y;
     let feedback = "";
-    if (answer == ans) {
+    if (answer == product) {
         feedback = "correct";
     }
     else {
         feedback = "wrong";
+        // errors.push(factors);
     }
     responseBox.innerHTML = feedback;
     questionNum++;
-    askQuestion(questionNum);
+    
+    let nextRound = document.createElement("button");
+    nextRound.id = "nextRound";
+    nextRound.addEventListener("click", function(event) {
+        askQuestion(questionNum); 
+      });
+    nextRound.innerText = "nextRound";
+    console.appendChild(nextRound);
 }
 
-function getRounds(){
-    let rounds = document.getElementById("rounds").value;
-    askQuestion(rounds);
-}
-
-
-function askQuestion(questionNum){
-    if (questionNum > 1) {
-        document.getElementById("console").innerHTML="";
-        display();
-    }
-    if (document.getElementById("response")) {
-        response.remove();
-        console.log("removed")
-    }
+function askQuestion(){
+    x = Math.floor(Math.random() * (max - min + 1)) + min;
+    y = Math.floor(Math.random() * (max - min + 1)) + min;
     let questionText =  "Question "+ questionNum + " of " + questions + "<br>";
     questionText += x + " * " + y + " = ?";
-    let score = [0, 0];
-    score++;
     return questionText;
 }
+
+/*
+at askQuestion (script.js:113:21)
+    at display (script.js:69:29)
+    at askQuestion (script.js:116:9)
+    at checkAnswer (script.js:110:5)
+    at display (script.js:90:12)
+    at askQuestion (script.js:116:9)
+    at checkAnswer (script.js:110:5)
+    at display (script.js:90:12)
+    at askQuestion (script.js:116:9)
+    at checkAnswer (script.js:110:5)
+    */
