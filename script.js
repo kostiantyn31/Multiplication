@@ -63,6 +63,7 @@ function display() {
     let oldbutton = document.getElementsByTagName("button")[0];
     if(oldbutton) {oldbutton.remove();}
 
+
     // Create the Question Box
     const questionBox = document.createElement("div");
     questionBox.setAttribute("id","questionBox");
@@ -106,20 +107,24 @@ function checkAnswer() {
     let nextRound = document.createElement("button");
     nextRound.id = "nextRound";
     nextRound.addEventListener("click", function(event) {
-        askQuestion(questionNum); 
+        nextRound.remove();
+        newQuestion(); 
       });
     nextRound.innerText = "nextRound";
     console.appendChild(nextRound);
 }
 
 function askQuestion(){
-    x = Math.floor(Math.random() * (max - min + 1)) + min;
-    y = Math.floor(Math.random() * (max - min + 1)) + min;
     let questionText =  "Question "+ questionNum + " of " + questions + "<br>";
     questionText += x + " * " + y + " = ?";
+
     return questionText;
 }
 
+function deleteAll() {
+    nextRound.remove();
+    newQuestion();
+}
 /*
 at askQuestion (script.js:113:21)
     at display (script.js:69:29)
