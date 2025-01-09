@@ -4,9 +4,9 @@ var errorDist = [0];
 // var questions = parseInt(document.getElementById("questions").value);
 // var min = parseInt(document.getElementById("min").value);
 // var max = parseInt(document.getElementById("max").value);
-var questions = 2;
+var questions = 3;
 var min = 3;
-var max = 9;
+var max = 10;
 var x = Math.floor(Math.random() * (max - min + 1)) + min;
 var y = Math.floor(Math.random() * (max - min + 1)) + min;
 var ans = x*y;
@@ -31,8 +31,7 @@ function setup() {
 }
 
 function configure() {
-    min = 3;
-    max = 12;
+
     console.innerHTML = "Program ready";
     let body = document.getElementsByTagName("body")[0];
 
@@ -44,17 +43,6 @@ function configure() {
     newbutton.addEventListener("click",display);
     body.appendChild(newbutton);
 }
-
-// function askQuestion(questionNum, questions) { 
-//     getRounds();
-//     let questionText =  "Question "+ questionNum + " of " + questions + "<br>";
-//     // let x = Math.floor(Math.random() * (max - min + 1)) + min;
-//     // let y = Math.floor(Math.random() * (max - min + 1)) + min;
-//     questionText += x + " * " + y + " = ?";
-
-
-//     return questionText;
-// }
 
 function display() {
     // Find our Div
@@ -68,6 +56,7 @@ function display() {
     const questionBox = document.createElement("div");
     questionBox.setAttribute("id","questionBox");
     console.appendChild(questionBox);
+    
     newQuestion();
 }
 
@@ -99,7 +88,7 @@ function checkAnswer() {
     }
     else {
         feedback = "wrong";
-        // errors.push(factors);
+
     }
     responseBox.innerHTML = feedback;
     questionNum++;
@@ -107,14 +96,16 @@ function checkAnswer() {
     let nextRound = document.createElement("button");
     nextRound.id = "nextRound";
     nextRound.addEventListener("click", function(event) {
-        nextRound.remove();
-        newQuestion(); 
+        deleteAll();
+        display();
       });
     nextRound.innerText = "nextRound";
     console.appendChild(nextRound);
 }
 
 function askQuestion(){
+    x = Math.floor(Math.random() * (max - min + 1)) + min;
+    y = Math.floor(Math.random() * (max - min + 1)) + min;
     let questionText =  "Question "+ questionNum + " of " + questions + "<br>";
     questionText += x + " * " + y + " = ?";
 
@@ -123,17 +114,9 @@ function askQuestion(){
 
 function deleteAll() {
     nextRound.remove();
-    newQuestion();
+    document.getElementById("answer").remove();
+    document.getElementById("newButton").remove();
+    document.getElementById("questionBox").remove();
+    document.getElementById("response").remove();
 }
-/*
-at askQuestion (script.js:113:21)
-    at display (script.js:69:29)
-    at askQuestion (script.js:116:9)
-    at checkAnswer (script.js:110:5)
-    at display (script.js:90:12)
-    at askQuestion (script.js:116:9)
-    at checkAnswer (script.js:110:5)
-    at display (script.js:90:12)
-    at askQuestion (script.js:116:9)
-    at checkAnswer (script.js:110:5)
-    */
+
