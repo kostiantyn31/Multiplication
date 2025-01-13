@@ -84,11 +84,11 @@ function checkAnswer() {
     let product = x * y;
     let feedback = "";
     if (answer == product) {
-        feedback = "correct";
+        feedback = "Correct";
     }
     else {
-        feedback = "wrong";
-
+        feedback = "Wrong. Change your answer";
+        nextRound.remove();
     }
     responseBox.innerHTML = feedback;
     questionNum++;
