@@ -1,9 +1,6 @@
 /* This is where we put our global variables */
 var errors = [];
 var errorDist = [0];
-// var questions = parseInt(document.getElementById("questions").value);
-// var min = parseInt(document.getElementById("min").value);
-// var max = parseInt(document.getElementById("max").value);
 var questions = 3;
 var min = 3;
 var max = 10;
@@ -20,9 +17,9 @@ function setup() {
     title.innerHTML = "Multiplication Practice";
     body.appendChild(title);
 
-    let console = document.createElement("div");
-    console.id = "console";
-    body.appendChild(console);
+    let playBoard = document.createElement("div");
+    playBoard.id = "console";
+    body.appendChild(playBoard);
 
     let button = document.createElement("button");
     button.innerHTML = "Start";
@@ -31,8 +28,8 @@ function setup() {
 }
 
 function configure() {
-
-    console.innerHTML = "Program ready";
+    let playBoard = document.getElementById("console");
+    playBoard.innerHTML = "";
     let body = document.getElementsByTagName("body")[0];
 
     let oldbutton = document.getElementsByTagName("button")[0];
@@ -45,8 +42,8 @@ function configure() {
 }
 
 function display() {
-    // Find our Div
-    let console = document.getElementById("console");
+    let playBoard = document.getElementById("console");
+    playBoard.innerHTML = "";
     // Remove the Button
     let oldbutton = document.getElementsByTagName("button")[0];
     if(oldbutton) {oldbutton.remove();}
@@ -55,7 +52,7 @@ function display() {
     // Create the Question Box
     const questionBox = document.createElement("div");
     questionBox.setAttribute("id","questionBox");
-    console.appendChild(questionBox);
+    playBoard.appendChild(questionBox);
     
     newQuestion();
 }
@@ -76,10 +73,10 @@ function newQuestion(){
 }
 
 function checkAnswer() {
-    let console = document.getElementById("console");
+    let playBoard = document.getElementById("console");
     let responseBox = document.createElement("div");
     responseBox.setAttribute("id","response");
-    console.appendChild(responseBox);
+    playBoard.appendChild(responseBox);
     let answer = document.getElementById("answer").value;
     let product = x * y;
     let feedback = "";
@@ -88,10 +85,15 @@ function checkAnswer() {
     }
     else {
         feedback = "Wrong. Change your answer";
-        nextRound.remove();
+        document.getElementById("answer").value = "";
+        document.getElementById("nextRound").remove();
     }
     responseBox.innerHTML = feedback;
     questionNum++;
+
+    const event = new KeyboardEvent('keydown', { 
+        key: 'Enter', code: 'Enter', which: 13, keyCode: 13, 
+    });
     
     let nextRound = document.createElement("button");
     nextRound.id = "nextRound";
@@ -99,8 +101,8 @@ function checkAnswer() {
         deleteAll();
         display();
       });
-    nextRound.innerText = "nextRound";
-    console.appendChild(nextRound);
+    nextRound.innerText = "Next round";
+    playBoard.appendChild(nextRound);
 }
 
 function askQuestion(){
@@ -119,4 +121,3 @@ function deleteAll() {
     document.getElementById("questionBox").remove();
     document.getElementById("response").remove();
 }
-
