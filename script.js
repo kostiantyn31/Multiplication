@@ -73,36 +73,45 @@ function newQuestion(){
 }
 
 function checkAnswer() {
+    console.log("Checking answer");
     let playBoard = document.getElementById("console");
     let responseBox = document.createElement("div");
     responseBox.setAttribute("id","response");
     playBoard.appendChild(responseBox);
+
     let answer = document.getElementById("answer").value;
     let product = x * y;
     let feedback = "";
+
     if (answer == product) {
         feedback = "Correct";
+        responseBox.innerHTML = feedback;
+        questionNum++;
+        let nextRound = document.createElement("button");
+        nextRound.id = "nextRound";
+        nextRound.addEventListener("click", function(event) {
+            deleteAll();
+            display();
+            responseBox.innerHTML = "";
+        });
+        nextRound.innerText = "Next round";
+        playBoard.appendChild(nextRound);
     }
     else {
-        feedback = "Wrong. Change your answer";
-        document.getElementById("answer").value = "";
-        document.getElementById("nextRound").remove();
+        console.log("Mistake");
+        errorFeedback(answer);
     }
-    responseBox.innerHTML = feedback;
-    questionNum++;
+}
 
-    const event = new KeyboardEvent('keydown', { 
-        key: 'Enter', code: 'Enter', which: 13, keyCode: 13, 
-    });
+function errorFeedback(answer){
+    console.log("Answer: "+ answer);
+    let responseBox = document.getElementById("response");
+    let feedback = answer + " is wrong. Change your answer";
+    responseBox.innerHTML = feedback;
+    if (document.getElementById("nextRound")) {
+        nextRound.remove();
+    }
     
-    let nextRound = document.createElement("button");
-    nextRound.id = "nextRound";
-    nextRound.addEventListener("click", function(event) {
-        deleteAll();
-        display();
-      });
-    nextRound.innerText = "Next round";
-    playBoard.appendChild(nextRound);
 }
 
 function askQuestion(){
