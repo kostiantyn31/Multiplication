@@ -83,10 +83,13 @@ function checkAnswer() {
     let product = x * y;
     let feedback = "";
 
+
     if (answer == product) {
         feedback = "Correct";
         responseBox.innerHTML = feedback;
+
         questionNum++;
+
         let nextRound = document.createElement("button");
         nextRound.id = "nextRound";
         nextRound.addEventListener("click", function(event) {
@@ -98,20 +101,18 @@ function checkAnswer() {
         playBoard.appendChild(nextRound);
     }
     else {
-        console.log("Mistake");
         errorFeedback(answer);
     }
 }
 
 function errorFeedback(answer){
-    console.log("Answer: "+ answer);
     let responseBox = document.getElementById("response");
     let feedback = answer + " is wrong. Change your answer";
     responseBox.innerHTML = feedback;
+
     if (document.getElementById("nextRound")) {
         nextRound.remove();
     }
-    
 }
 
 function askQuestion(){
