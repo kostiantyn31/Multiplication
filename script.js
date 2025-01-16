@@ -1,7 +1,7 @@
 /* This is where we put our global variables */
 var errors = [];
 var errorDist = [0];
-var questions = 3;
+var questions = 1;
 var min = 3;
 var max = 10;
 var x = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -10,6 +10,7 @@ var ans = x*y;
 var questionNum = 1;
 var errors = [];
 var factors= [0,0];
+var totalQuestions = 1;
 
 function setup() {
     let body = document.getElementsByTagName("body")[0];
@@ -58,18 +59,22 @@ function display() {
 }
 
 function newQuestion(){
-    const answer = document.createElement("input");
-    answer.id = "answer";
-    document.getElementById("console").appendChild(answer);   
-    document.getElementById("questionBox").innerHTML=askQuestion();
+    if (questionNum > totalQuestions) {
+        showResults();
+    }
+    else {
+        const answer = document.createElement("input");
+        answer.id = "answer";
+        document.getElementById("console").appendChild(answer);   
+        document.getElementById("questionBox").innerHTML=askQuestion();
 
-    // Display the button
-    let newButton = document.createElement("button");
-    newButton.id = "newButton";
-    newButton.addEventListener("click", checkAnswer);
-    newButton.innerText = "Submit Answer";
-    document.getElementById("console").appendChild(newButton);
-
+        // Display the button
+        let newButton = document.createElement("button");
+        newButton.id = "newButton";
+        newButton.addEventListener("click", checkAnswer);
+        newButton.innerText = "Submit Answer";
+        document.getElementById("console").appendChild(newButton);
+    }  
 }
 
 function checkAnswer() {
@@ -79,11 +84,11 @@ function checkAnswer() {
     responseBox.setAttribute("id","response");
     playBoard.appendChild(responseBox);
 
-    let answer = document.getElementById("answer").value;
+    let response = document.getElementById("answer").value;
     let product = x * y;
     let feedback = "";
 
-    if (answer == product) {
+    if (response == product) {
         feedback = "Correct";
         responseBox.innerHTML = feedback;
 
@@ -100,15 +105,15 @@ function checkAnswer() {
         playBoard.appendChild(nextRound);
     }
     else {
-        errorFeedback(answer);
+        errorFeedback(response);
     }
 }
 
-function errorFeedback(answer){
+function errorFeedback(response){
     let responseBox = document.getElementById("response");
-    let feedback = answer + " is wrong. Change your answer";
+    let feedback = response + " is wrong. Change your answer";
     let answer = document.getElementById("answer");
-    answer.value="";
+    answer.value = "";
     responseBox.innerHTML = feedback;
 
     if (document.getElementById("nextRound")) {
@@ -125,10 +130,15 @@ function askQuestion(){
     return questionText;
 }
 
+function showResults() {
+    let responseBox = document.getElementById("response");
+    let feedback = "u have 5 correct";
+    responseBox.innerHTML = feedback;
+}
+
 function deleteAll() {
-    nextRound.remove();
+    document.getElementById("nextRound").remove();
     document.getElementById("answer").remove();
     document.getElementById("newButton").remove();
     document.getElementById("questionBox").remove();
-    document.getElementById("response").remove();
 }
