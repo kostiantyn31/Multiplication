@@ -73,7 +73,7 @@ function newQuestion(){
 }
 
 function checkAnswer() {
-    console.log("Checking answer");
+
     let playBoard = document.getElementById("console");
     let responseBox = document.createElement("div");
     responseBox.setAttribute("id","response");
@@ -82,7 +82,6 @@ function checkAnswer() {
     let answer = document.getElementById("answer").value;
     let product = x * y;
     let feedback = "";
-
 
     if (answer == product) {
         feedback = "Correct";
@@ -108,6 +107,8 @@ function checkAnswer() {
 function errorFeedback(answer){
     let responseBox = document.getElementById("response");
     let feedback = answer + " is wrong. Change your answer";
+    let answer = document.getElementById("answer");
+    answer.value="";
     responseBox.innerHTML = feedback;
 
     if (document.getElementById("nextRound")) {
