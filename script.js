@@ -81,7 +81,7 @@ function checkAnswer() {
 
     let playBoard = document.getElementById("console");
     let responseBox = document.createElement("div");
-    responseBox.setAttribute("id","response");
+    responseBox.setAttribute("id","responseBox");
     playBoard.appendChild(responseBox);
 
     let response = document.getElementById("answer").value;
@@ -110,7 +110,7 @@ function checkAnswer() {
 }
 
 function errorFeedback(response){
-    let responseBox = document.getElementById("response");
+    let responseBox = document.getElementById("responseBox");
     let feedback = response + " is wrong. Change your answer";
     let answer = document.getElementById("answer");
     answer.value = "";
@@ -131,7 +131,7 @@ function askQuestion(){
 }
 
 function showResults() {
-    let responseBox = document.getElementById("response");
+    let responseBox = document.getElementById("responseBox");
     let feedback = "u have 5 correct";
     responseBox.innerHTML = feedback;
 }
