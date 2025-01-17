@@ -1,7 +1,7 @@
 /* This is where we put our global variables */
 var errors = [];
 var errorDist = [0];
-var questions = 1;
+var questions = 5;
 var min = 3;
 var max = 10;
 var x = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -10,7 +10,8 @@ var ans = x*y;
 var questionNum = 1;
 var errors = [];
 var factors= [0,0];
-var totalQuestions = 1;
+var totalQuestions = 5;
+var badtry = 0;
 
 function setup() {
     let body = document.getElementsByTagName("body")[0];
@@ -59,22 +60,19 @@ function display() {
 }
 
 function newQuestion(){
-    if (questionNum > totalQuestions) {
-        showResults();
-    }
-    else {
-        const answer = document.createElement("input");
-        answer.id = "answer";
-        document.getElementById("console").appendChild(answer);   
-        document.getElementById("questionBox").innerHTML=askQuestion();
 
-        // Display the button
-        let newButton = document.createElement("button");
-        newButton.id = "newButton";
-        newButton.addEventListener("click", checkAnswer);
-        newButton.innerText = "Submit Answer";
-        document.getElementById("console").appendChild(newButton);
-    }  
+    const answer = document.createElement("input");
+    answer.id = "answer";
+    document.getElementById("console").appendChild(answer);   
+    document.getElementById("questionBox").innerHTML=askQuestion();
+
+    // Display the button
+    let newButton = document.createElement("button");
+    newButton.id = "newButton";
+    newButton.addEventListener("click", checkAnswer);
+    newButton.innerText = "Submit Answer";
+    document.getElementById("console").appendChild(newButton);
+
 }
 
 function checkAnswer() {
@@ -107,6 +105,18 @@ function checkAnswer() {
     else {
         errorFeedback(response);
     }
+    if (questionNum > totalQuestions) {
+        nextRound.remove();
+
+        let playBoard = document.getElementById("console")
+        let seeResults = document.createElement("button");
+        seeResults.innerHTML = "See results";
+        seeResults.addEventListener("click",function(event) {
+        deleteNot();
+        showResults();  
+        });
+        playBoard.appendChild(seeResults);
+    }
 }
 
 function errorFeedback(response){
@@ -115,6 +125,7 @@ function errorFeedback(response){
     let answer = document.getElementById("answer");
     answer.value = "";
     responseBox.innerHTML = feedback;
+    badtry++;
 
     if (document.getElementById("nextRound")) {
         nextRound.remove();
@@ -132,12 +143,19 @@ function askQuestion(){
 
 function showResults() {
     let responseBox = document.getElementById("responseBox");
-    let feedback = "u have 5 correct";
+    let feedback = "U have 5 correct. U have " + badtry + " false";
     responseBox.innerHTML = feedback;
+    document.getElementById("seeResults").remove();
 }
 
 function deleteAll() {
-    document.getElementById("nextRound").remove();
+    nextRound.remove();
+    document.getElementById("answer").remove();
+    document.getElementById("newButton").remove();
+    document.getElementById("questionBox").remove();
+}
+
+function deleteNot() {
     document.getElementById("answer").remove();
     document.getElementById("newButton").remove();
     document.getElementById("questionBox").remove();
